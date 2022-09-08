@@ -2,7 +2,7 @@ package collection_test
 
 import (
 	"fmt"
-	"go-for-java-programmers/collection"
+	"github.com/ikonglong/go-exercises/go-for-java-programmers/collection"
 	"testing"
 )
 
