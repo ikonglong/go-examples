@@ -1,7 +1,7 @@
 module github.com/ikonglong/go-examples
 //module go-examples
 
-#go 1.17
+//go 1.17
 go 1.16
 
 require (
