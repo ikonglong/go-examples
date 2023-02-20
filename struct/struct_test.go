@@ -1,4 +1,4 @@
-package _struct
+package struct_ex
 
 import (
 	"fmt"
@@ -8,29 +8,43 @@ import (
 type book struct {
 	title   string
 	price   int
-	authors [1]author
+	authors [1]person
+	editor  person
 }
 
-type author struct {
+type person struct {
 	name string
 }
 
 func TestAssignValObjToVar(t *testing.T) {
-	a := author{
+	a := person{
 		name: "x-man",
 	}
-	b := a
-	fmt.Printf("a: %v, b: %v\n", a, b)
-	fmt.Printf("&a: %p, &b: %p\n", &a, &b)
-	b.name = "batman"
-	fmt.Printf("a: %v, b: %v\n", a, b)
+	a2 := a
+	fmt.Printf("a: %v, a2: %v\n", a, a2)
+	fmt.Printf("&a: %p, &a2: %p\n", &a, &a2)
+	a2.name = "batman"
+	fmt.Printf("a: %v, a2: %v\n", a, a2)
+}
+
+func TestAssignValObjToObjField(t *testing.T) {
+	p := person{
+		name: "x-man",
+	}
+	var b book
+	b.editor = p
+	fmt.Printf("p: %v, b.editor: %v\n", p, b.editor)
+	fmt.Printf("&p: %p, &b.editor: %p\n", &p, &(b.editor))
+	p.name = "batman"
+	fmt.Printf("p: %v, b.editor: %v\n", p, b.editor)
+	fmt.Printf("&p: %p, &b.editor: %p\n", &p, &(b.editor))
 }
 
 func TestNewBook(t *testing.T) {
-	theAuthor := author{
+	theAuthor := person{
 		name: "peter",
 	}
-	authors := [1]author{0: theAuthor}
+	authors := [1]person{0: theAuthor}
 	var price = 10
 	var title = "go programming"
 	fmt.Printf("&theAuthor: %p, &authors: %p, &(authors[0]): %p, &price: %p, &title: %p\n",
@@ -44,10 +58,10 @@ func TestNewBook(t *testing.T) {
 }
 
 func TestNewBook2(t *testing.T) {
-	theAuthor := author{
+	theAuthor := person{
 		name: "peter",
 	}
-	authors := [1]author{0: theAuthor}
+	authors := [1]person{0: theAuthor}
 	var price = 10
 	var title = "go programming"
 	fmt.Printf("&theAuthor: %p, &authors: %p, &(authors[0]): %p, &price: %p, &title: %p\n",
