@@ -11,5 +11,5 @@ func TestIllegalArg(t *testing.T) {
 		fmt.Println("err == nil")
 	}
 	fmt.Println("---------------")
-	handleError(err)
+	//handleError(err)
 }

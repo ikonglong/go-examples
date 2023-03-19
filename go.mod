@@ -1,11 +1,11 @@
 module github.com/ikonglong/go-examples
-//module go-examples
 
-//go 1.17
-go 1.16
+//go 1.18
+go 1.19
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/google/uuid v1.3.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/stretchr/objx v0.1.0 // indirect
