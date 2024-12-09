@@ -1,0 +1,17 @@
+package main
+
+/*
+#include <stdio.h>
+#include <stdlib.h>
+int SayHello(char *s) {
+    puts(s);
+    return 0;
+}
+*/
+import "C"
+import "fmt"
+
+func main() {
+	ret := C.SayHello(C.CString("hello world"))
+	fmt.Println(ret)
+}
