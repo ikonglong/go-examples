@@ -1,37 +1,53 @@
-package _func
+package func_
 
 import (
 	"context"
-	"fmt"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
-type handlerFunc func(c context.Context, ctx *requestContext) any
+type postReq func(ctx context.Context, req *req, resp *resp) (status int)
 
-type requestContext struct{}
-
-type result struct {
-	reqPath string
-	resp    any
+type req struct {
+	path string
 }
 
-func dispatchReq(ctx context.Context, path string, handler handlerFunc) any {
-	return &result{
-		reqPath: path,
-		resp:    handler(ctx, &requestContext{}),
+type resp struct {
+	status int
+	data   string
+}
+
+func handleReq(ctx context.Context, req *req, callback postReq) any {
+	// handle req ...
+	resp := &resp{
+		data: "data",
 	}
+	resp.status = callback(ctx, req, resp)
+	return resp
 }
 
-type someHandler struct {
-	name string
+type PostReqCallback struct {
+	req  *req
+	resp *resp
 }
 
-func (h *someHandler) handle(c context.Context, ctx *requestContext) any {
-	return "ok"
+func (cb *PostReqCallback) postReq(ctx context.Context, req *req, resp *resp) (status int) {
+	cb.req = req
+	cb.resp = resp
+	return 200
 }
 
-func TestPassObjectMethodToArgOfTypeFunc(t *testing.T) {
-	h := &someHandler{name: "add to shopping-cart"}
-	r := dispatchReq(context.Background(), "/shopping_cart", h.handle)
-	fmt.Printf("result: %+v\n", r)
+func TestPassObjectMethodToFuncTypeParam(t *testing.T) {
+	cb := &PostReqCallback{}
+	req := &req{
+		path: "/shopping_cart",
+	}
+	r := handleReq(context.Background(), req, cb.postReq)
+	assert.Equal(t, req, cb.req)
+	expectedResp := &resp{
+		status: 200,
+		data:   "data",
+	}
+	assert.Equal(t, expectedResp, cb.resp)
+	assert.Equal(t, expectedResp, r)
 }

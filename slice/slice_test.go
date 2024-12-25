@@ -36,12 +36,13 @@ func TestPassSlice(t *testing.T) {
 	fmt.Printf("[before revise] addr of books: %p, books as reference: %p\n", &books, books)
 	fmt.Printf("[before revise] addr of books[0]: %p, books[0]: %v\n", &(books[0]), books[0])
 	returnedBooks := revise(books)
-	fmt.Printf("[after revise] addr of returnedBooks: %p, retunedBooks as reference: %p\n", &returnedBooks, returnedBooks)
+	fmt.Printf("[after revise] addr of returnedBooks: %p, retunedBooks as reference: %p\n", &returnedBooks,
+		returnedBooks)
 	fmt.Printf("[after revise] addr of books[0]: %p, books[0]: %v\n", &(books[0]), books[0])
 }
 
 func TestPanicWhenAccessSliceOfWhichTheLenIs0(t *testing.T) {
-	//panic: runtime error: index out of range [0] with length 0 [recovered]
+	// panic: runtime error: index out of range [0] with length 0 [recovered]
 	//    panic: runtime error: index out of range [0] with length 0
 	strs := make([]string, 0, 3)
 	// 因为 strs 长度是 0，所以下标 0 越界
@@ -61,4 +62,15 @@ func TestAppendToSlice(t *testing.T) {
 	// 注意，append 不是从头开始追加，而是追加在尾部。它将新元素追加在 len 位置，只要 len 小于等于 capacity
 	assert.Equal(t, "", strs[0])
 	assert.Equal(t, "d", strs[3])
+}
+
+func TestCustomSliceType(t *testing.T) {
+	type names []string
+	l := make(names, 0)
+	l = append(l, "a")
+	assert.Equal(t, "a", l[0])
+
+	l2 := make([]names, 0)
+	l2 = append(l2, names{"a"})
+	assert.Equal(t, names{"a"}, l2[0])
 }

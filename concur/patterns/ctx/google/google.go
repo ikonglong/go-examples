@@ -87,7 +87,7 @@ func httpDo(ctx context.Context, req *http.Request, f func(*http.Response, error
 	case <-ctx.Done(): // the operation running in ctx completes or is cancelled or times out
 		<-c // Wait for f to return. That f returns indicates that the req has been run.
 		return ctx.Err()
-	case err := <-c: // if error occurred while running req
+	case err := <-c: // if error occurred while running req and handling response
 		return err
 	}
 }
